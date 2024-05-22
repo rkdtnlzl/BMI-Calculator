@@ -20,9 +20,17 @@ class ViewController: UIViewController {
     @IBOutlet var randomBMIButton: UIButton!
     @IBOutlet var resultButton: UIButton!
     
-    //MARK: LifeCycle
+        //MARK: LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        //Lock이 걸려있다가 풀리는 문제 해결 코드 추가
+        heightTextField.autocorrectionType = .no
+        heightTextField.spellCheckingType = .no
+        weightTextField.autocorrectionType = .no
+        weightTextField.spellCheckingType = .no
+        
         
         setConfigure()
         hideKeyBoardWhenTappedScreen()
@@ -86,32 +94,45 @@ class ViewController: UIViewController {
     
     @IBAction func resultButtonClicked(_ sender: UIButton) {
         //체중(kg) / 키(m)의 제곱
-        let height = Double(heightTextField.text!)!
-        let weight = Double(weightTextField.text!)!
+        let height = Double(heightTextField.text!) ?? 0.0
+        let weight = Double(weightTextField.text!) ?? 0.0
         let bmi = weight/(height*height*0.0001)
         
-        var bmiAlert = ""
+//        var bmiAlert = ""
         
         if heightTextField.text == "" || weightTextField.text == "" {
             
             let alert1 = UIAlertController(title: "신장과 체중을 입력하세요", message: "", preferredStyle: .alert)
+            let confirm1 = UIAlertAction(title: "확인", style: .default)
+            alert1.addAction(confirm1)
             present(alert1, animated: true)
             return
         }
         
         if bmi >= 40 {
-            bmiAlert = "3단계 비만입니다"
+//            bmiAlert = "3단계 비만입니다"
+            UserDefaults.standard.removeObject(forKey: "bmi")
+            UserDefaults.standard.setValue("3단계 비만", forKey: "bmi")
         } else if bmi >= 30 && bmi < 40 {
-            bmiAlert = "2단계 비만입니다"
+//            bmiAlert = "2단계 비만입니다"
+            UserDefaults.standard.removeObject(forKey: "bmi")
+            UserDefaults.standard.setValue("2단계 비만", forKey: "bmi")
         } else if bmi >= 25 && bmi < 30 {
-            bmiAlert = "1단계 비만입니다"
+//            bmiAlert = "1단계 비만입니다"
+            UserDefaults.standard.removeObject(forKey: "bmi")
+            UserDefaults.standard.setValue("1단계 비만", forKey: "bmi")
         } else if bmi >= 18.5 && bmi < 25 {
-            bmiAlert = "정상입니다"
+//            bmiAlert = "정상입니다"
+            UserDefaults.standard.removeObject(forKey: "bmi")
+            UserDefaults.standard.setValue("정상", forKey: "bmi")
         } else {
-            bmiAlert = "저체중입니다"
+//            bmiAlert = "저체중입니다"
+            UserDefaults.standard.removeObject(forKey: "bmi")
+            UserDefaults.standard.setValue("저체중", forKey: "bmi")
         }
         
-        let alert = UIAlertController(title: bmiAlert, message: "", preferredStyle: .alert)
+        let myBMI = UserDefaults.standard.string(forKey: "bmi") ?? "텅 빈 BMI"
+        let alert = UIAlertController(title: "\(myBMI)입니다", message: "", preferredStyle: .alert)
         let confirm = UIAlertAction(title: "확인", style: .default)
         alert.addAction(confirm)
         present(alert, animated: true)
