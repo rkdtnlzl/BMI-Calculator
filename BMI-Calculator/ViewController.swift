@@ -42,16 +42,8 @@ class ViewController: UIViewController {
         weightLabel.text = "몸무게가 어떻게 되시나요?"
         weightLabel.font = UIFont.systemFont(ofSize: 17)
         
-        heightTextField.layer.cornerRadius = 15
-        heightTextField.layer.borderColor = UIColor.black.cgColor
-        heightTextField.layer.borderWidth = 1
-        heightTextField.keyboardType = .numberPad
-        
-        weightTextField.layer.cornerRadius = 15
-        weightTextField.layer.borderColor = UIColor.black.cgColor
-        weightTextField.layer.borderWidth = 1
-        weightTextField.keyboardType = .numberPad
-        weightTextField.isSecureTextEntry = true
+        setTextField(field: heightTextField)
+        setTextField(field: weightTextField)
         
         randomBMIButton.setTitle("랜덤으로 BMI 계산하기", for: .normal)
         randomBMIButton.setTitleColor(.red, for: .normal)
@@ -61,6 +53,14 @@ class ViewController: UIViewController {
         resultButton.layer.cornerRadius = 10
         resultButton.backgroundColor = .purple
         resultButton.tintColor = .white
+    }
+    
+    func setTextField(field: UITextField) {
+        field.layer.cornerRadius = 15
+        field.layer.borderColor = UIColor.black.cgColor
+        field.layer.borderWidth = 1
+        field.keyboardType = .numberPad
+        field.isSecureTextEntry = true
     }
     
     //MARK: Action
