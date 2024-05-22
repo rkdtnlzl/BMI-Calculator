@@ -44,6 +44,7 @@ class ViewController: UIViewController {
         
         setTextField(field: heightTextField)
         setTextField(field: weightTextField)
+        weightTextField.isSecureTextEntry = true
         
         randomBMIButton.setTitle("랜덤으로 BMI 계산하기", for: .normal)
         randomBMIButton.setTitleColor(.red, for: .normal)
@@ -60,7 +61,6 @@ class ViewController: UIViewController {
         field.layer.borderColor = UIColor.black.cgColor
         field.layer.borderWidth = 1
         field.keyboardType = .numberPad
-        field.isSecureTextEntry = true
     }
     
     //MARK: Action
@@ -80,6 +80,8 @@ class ViewController: UIViewController {
         
         let weightRandom = Int.random(in: 40...100)
         weightTextField.text = "\(weightRandom)"
+        
+        weightTextField.isSecureTextEntry = true
     }
     
     @IBAction func resultButtonClicked(_ sender: UIButton) {
